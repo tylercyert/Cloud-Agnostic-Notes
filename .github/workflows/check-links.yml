@@ -1,0 +1,47 @@
+name: Check Markdown Links
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  check-links:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: Install markdown-link-check
+      run: npm install -g markdown-link-check
+      
+    - name: Check markdown links
+      run: |
+        # Find all markdown files and check their links
+        find . -name "*.md" -type f | while read -r file; do
+          echo "Checking links in: $file"
+          markdown-link-check "$file" --config .markdown-link-check.json || true
+        done
+        
+    - name: Check for broken internal links
+      run: |
+        # Simple check for internal links that might be broken
+        echo "Checking for potential broken internal links..."
+        find . -name "*.md" -type f -exec grep -l "\.md" {} \; | while read -r file; do
+          echo "Checking internal links in: $file"
+          grep -o "\[.*\](.*\.md)" "$file" | while read -r link; do
+            # Extract the file path from the markdown link
+            filepath=$(echo "$link" | sed 's/.*](\(.*\.md\)).*/\1/' | sed 's/%20/ /g' | sed 's/%26/\&/g')
+            if [ ! -f "$filepath" ]; then
+              echo "WARNING: Broken internal link in $file: $link -> $filepath"
+            fi
+          done
+        done

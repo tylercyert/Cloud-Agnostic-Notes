@@ -1,0 +1,41 @@
+{
+  "ignorePatterns": [
+    {
+      "pattern": "^https://docs.aws.amazon.com"
+    },
+    {
+      "pattern": "^https://docs.microsoft.com"
+    },
+    {
+      "pattern": "^https://kubernetes.io"
+    },
+    {
+      "pattern": "^https://www.markdownguide.org"
+    },
+    {
+      "pattern": "^https://docs.github.com"
+    },
+    {
+      "pattern": "^https://help.obsidian.md"
+    }
+  ],
+  "httpHeaders": [
+    {
+      "urls": ["https://docs.aws.amazon.com"],
+      "headers": {
+        "User-Agent": "Mozilla/5.0 (compatible; CloudInfraNotes/1.0)"
+      }
+    },
+    {
+      "urls": ["https://docs.microsoft.com"],
+      "headers": {
+        "User-Agent": "Mozilla/5.0 (compatible; CloudInfraNotes/1.0)"
+      }
+    }
+  ],
+  "timeout": 10000,
+  "retryOn429": true,
+  "retryCount": 3,
+  "fallbackRetryDelay": 30,
+  "aliveStatusCodes": [200, 206]
+}
