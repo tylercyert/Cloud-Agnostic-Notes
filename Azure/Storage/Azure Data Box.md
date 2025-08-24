@@ -1,5 +1,5 @@
 ## **Overview**
-**Azure Data Box** is a **physical appliance** provided by [[Microsoft]] to help customers move **large volumes of data** into or out of [[*Azure Storage]]. It’s designed for scenarios where transferring data over the internet would be too slow, costly, or impractical.
+**Azure Data Box** is a **physical appliance** provided by [[Microsoft]] to help customers move **large volumes of data** into or out of [[Azure Storage]]. It’s designed for scenarios where transferring data over the internet would be too slow, costly, or impractical.
 
 ## **Details**
 - **Purpose**  

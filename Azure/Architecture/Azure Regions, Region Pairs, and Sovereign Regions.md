@@ -17,7 +17,7 @@ Region pairs are two [[Azure regions]] within the same geography, paired togethe
 ## **Region Pair Replication**
 - **Region pairs are predefined** by [[Microsoft]]; you don’t opt in or configure the pairing itself.  
 - **Replication is not automatic for all services**:  
-	- Some services, like [[*Azure Storage]] with [[GRS (Geo-Redundant Storage)]], replicate automatically across the paired region.  
+	- Some services, like [[Azure Storage]] with [[GRS (Geo-Redundant Storage)]], replicate automatically across the paired region.  
 	- Others, such as [[Virtual Machines (VMs)]] or [[Azure SQL Database]], require you to configure disaster recovery (e.g., [[Azure Site Recovery]], geo-replication).  
 - Benefit: When replication is enabled, data stays **within the same geography (usually a country or governing body jurisdiction)** for compliance and disaster recovery.  
 - Planned maintenance is rolled out **one region at a time** to reduce downtime risk.  

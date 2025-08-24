@@ -14,7 +14,7 @@ Azure's core services are pre-registered out of the box.
 - **Resource Types**  
 	- Within each provider, you get access to resource types:  
 		- `Microsoft.Compute` → [[Azure Virtual Machines (VMs)]], scale sets, images.  
-		- `Microsoft.Storage` → [[*Azure Storage]] accounts, blob/file/queue/table.  
+		- `Microsoft.Storage` → [[Azure Storage]] accounts, blob/file/queue/table.  
 		- `Microsoft.Network` → [[Azure Virtual Network (VNet)]], load balancers, NICs.  
 - **Registration**  
 	- Some resource providers must be **registered** in a subscription before use.  

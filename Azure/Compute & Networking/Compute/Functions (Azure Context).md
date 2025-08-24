@@ -15,7 +15,7 @@ aliases:
 		- HTTP requests  
 		- Queue messages  
 		- Timers/schedules  
-		- [[*Azure Storage]] or [[Azure Event Grid]] events  
+		- [[Azure Storage]] or [[Azure Event Grid]] events  
 - **Scaling**  
 	- Automatically scales up/down based on demand.  
 	- Ideal for unpredictable workloads.  
