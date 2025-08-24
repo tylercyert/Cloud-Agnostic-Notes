@@ -1,3 +1,5 @@
+# AWS Architecture
+
 ## **Overview**
 The **AWS Architecture** domain covers the **foundational building blocks** for designing workloads in the AWS Cloud. It focuses on how AWS organizes its **infrastructure, responsibility model, and design principles** to achieve scalability, resilience, and security.  
 

@@ -1,3 +1,5 @@
+# Azure Architecture
+
 ---
 aliases:
   - Azure Architecture

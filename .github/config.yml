@@ -1,0 +1,45 @@
+# GitHub Repository Configuration
+# This ensures proper markdown rendering and repository behavior
+
+# Markdown rendering settings
+markdown:
+  # Enable GitHub Flavored Markdown
+  gfm: true
+  
+  # Enable syntax highlighting
+  highlight: true
+  
+  # Enable math rendering
+  math: true
+
+# Repository settings
+repository:
+  # Enable GitHub Pages
+  pages:
+    enabled: true
+    source: "main"
+    branch: "main"
+  
+  # Enable Wiki
+  wiki:
+    enabled: true
+  
+  # Enable Issues
+  issues:
+    enabled: true
+  
+  # Enable Pull Requests
+  pull_requests:
+    enabled: true
+
+# File associations
+files:
+  # Ensure .md files are treated as markdown
+  "*.md":
+    language: "Markdown"
+    syntax: "markdown"
+  
+  # Ensure .yml files are treated as YAML
+  "*.yml":
+    language: "YAML"
+    syntax: "yaml"
