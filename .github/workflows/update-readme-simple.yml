@@ -1,0 +1,57 @@
+name: Update README Stats (Simple)
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - '**/*.md'
+      - '!README.md'
+  workflow_dispatch:
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Count markdown files
+      id: count-files
+      run: |
+        FILE_COUNT=$(find . -name "*.md" | wc -l)
+        echo "file_count=$FILE_COUNT" >> $GITHUB_OUTPUT
+        echo "Found $FILE_COUNT markdown files"
+        
+    - name: Show current README stats
+      run: |
+        echo "Current README stats section:"
+        grep -A 2 -B 2 "Last updated\|Total files" README.md || echo "Stats section not found"
+        
+    - name: Update README with current stats
+      run: |
+        # Get current date in a readable format
+        CURRENT_DATE=$(date '+%B %d, %Y')
+        echo "Updating to date: $CURRENT_DATE"
+        echo "Updating to file count: ${{ steps.count-files.outputs.file_count }}"
+        
+        # Update the README.md file
+        sed -i "s/\*Last updated: .*\*/\*Last updated: $CURRENT_DATE\*/" README.md
+        sed -i "s/\*Total files: .*\*/\*Total files: ${{ steps.count-files.outputs.file_count }}\*/" README.md
+        
+        echo "Updated README.md"
+        
+    - name: Show updated README content
+      run: |
+        echo "Updated README stats section:"
+        grep -A 2 -B 2 "Last updated\|Total files" README.md || echo "Stats section not found"
+        
+    - name: Show what needs to be done
+      run: |
+        echo "README has been updated locally in the workflow."
+        echo "To apply these changes, you need to:"
+        echo "1. Copy the updated content from the workflow logs above"
+        echo "2. Manually update your README.md file"
+        echo "3. Commit and push the changes"
+        echo ""
+        echo "Or use the create-pull-request workflow instead."

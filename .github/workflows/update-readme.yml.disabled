@@ -1,0 +1,46 @@
+name: Update README Stats
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - '**/*.md'
+      - '!README.md'
+  workflow_dispatch:
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+      pull-requests: write
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+      
+    - name: Count markdown files
+      id: count-files
+      run: |
+        FILE_COUNT=$(find . -name "*.md" | wc -l)
+        echo "file_count=$FILE_COUNT" >> $GITHUB_OUTPUT
+        
+    - name: Update README with current stats
+      run: |
+        # Get current date in a readable format
+        CURRENT_DATE=$(date '+%B %d, %Y')
+        
+        # Update the README.md file
+        sed -i "s/\*Last updated: .*\*/\*Last updated: $CURRENT_DATE\*/" README.md
+        sed -i "s/\*Total files: .*\*/\*Total files: ${{ steps.count-files.outputs.file_count }}\*/" README.md
+        
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add README.md
+        git diff --quiet && git diff --staged --quiet || git commit -m "Update README stats - ${{ steps.count-files.outputs.file_count }} files, updated ${{ github.event.head_commit.timestamp }}"
+        git push origin HEAD:${{ github.ref }}

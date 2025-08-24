@@ -1,0 +1,55 @@
+name: Manual README Update
+
+on:
+  workflow_dispatch:
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+      
+    - name: Count markdown files
+      id: count-files
+      run: |
+        FILE_COUNT=$(find . -name "*.md" | wc -l)
+        echo "file_count=$FILE_COUNT" >> $GITHUB_OUTPUT
+        echo "Found $FILE_COUNT markdown files"
+        
+    - name: Show current README content
+      run: |
+        echo "Current README stats section:"
+        grep -A 2 -B 2 "Last updated\|Total files" README.md || echo "Stats section not found"
+        
+    - name: Update README with current stats
+      run: |
+        # Get current date in a readable format
+        CURRENT_DATE=$(date '+%B %d, %Y')
+        echo "Updating to date: $CURRENT_DATE"
+        echo "Updating to file count: ${{ steps.count-files.outputs.file_count }}"
+        
+        # Update the README.md file
+        sed -i "s/\*Last updated: .*\*/\*Last updated: $CURRENT_DATE\*/" README.md
+        sed -i "s/\*Total files: .*\*/\*Total files: ${{ steps.count-files.outputs.file_count }}\*/" README.md
+        
+        echo "Updated README.md"
+        
+    - name: Show updated README content
+      run: |
+        echo "Updated README stats section:"
+        grep -A 2 -B 2 "Last updated\|Total files" README.md || echo "Stats section not found"
+        
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add README.md
+        git diff --quiet && git diff --staged --quiet || git commit -m "Manual update: README stats - ${{ steps.count-files.outputs.file_count }} files, updated ${{ github.event.head_commit.timestamp }}"
+        git push
